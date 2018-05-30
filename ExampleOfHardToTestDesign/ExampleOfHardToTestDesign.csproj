@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Models\BatchUploadDataEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IBatchUploadService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
