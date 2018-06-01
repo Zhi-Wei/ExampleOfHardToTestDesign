@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExampleOfHardToTestDesign.Models;
+using ExampleOfHardToTestDesign.Utilities;
 using Newtonsoft.Json;
 
 namespace ExampleOfHardToTestDesign.Services
