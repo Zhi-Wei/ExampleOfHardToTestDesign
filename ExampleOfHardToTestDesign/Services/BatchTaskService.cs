@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ExampleOfHardToTestDesign.Enums;
 using ExampleOfHardToTestDesign.Models;
 using ExampleOfHardToTestDesign.Utilities;
 using Newtonsoft.Json;
@@ -45,9 +46,9 @@ namespace ExampleOfHardToTestDesign.Services
                 {
                     bookingTime = isDelayBookingTime ? bookingTime.AddMinutes(intervals) : DateTime.Now;
                     var serializedData = JsonConvert.SerializeObject(item);
-                    taskHelper.CreateTask("BatchTask", serializedData, bookingTime);
+                    taskHelper.CreateTask(TaskTypeEnum.BatchTask, serializedData, bookingTime);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     result = false;
                     // TODO: 記錄錯誤資訊。
