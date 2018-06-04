@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BatchTaskService.cs" />
     <Compile Include="Services\IBatchTaskService.cs" />
+    <Compile Include="Utilities\IJsonHelper.cs" />
     <Compile Include="Utilities\ITaskHelper.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
   </ItemGroup>
