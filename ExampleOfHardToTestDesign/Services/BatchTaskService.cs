@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ExampleOfHardToTestDesign.Enums;
 using ExampleOfHardToTestDesign.Models;
 using ExampleOfHardToTestDesign.Utilities;
-using Newtonsoft.Json;
 
 namespace ExampleOfHardToTestDesign.Services
 {
@@ -19,13 +18,24 @@ namespace ExampleOfHardToTestDesign.Services
         private readonly ITaskHelper _taskHelper;
 
         /// <summary>
-        /// 初始化 <see cref="BatchTaskService"/> 類別實體。
+        /// JSON 實用程式。
+        /// </summary>
+        private readonly IJsonHelper _jsonHelper;
+
+        /// <summary>
+        /// 初始化 <see cref="BatchTaskService" /> 類別實體。
         /// </summary>
         /// <param name="taskHelper">任務實用程式。</param>
-        /// <exception cref="ArgumentNullException">taskHelper</exception>
-        public BatchTaskService(ITaskHelper taskHelper)
+        /// <param name="jsonHelper">JSON 實用程式。</param>
+        /// <exception cref="ArgumentNullException">
+        /// taskHelper
+        /// or
+        /// jsonHelper
+        /// </exception>
+        public BatchTaskService(ITaskHelper taskHelper, IJsonHelper jsonHelper)
         {
             this._taskHelper = taskHelper ?? throw new ArgumentNullException(nameof(taskHelper));
+            this._jsonHelper = jsonHelper ?? throw new ArgumentNullException(nameof(jsonHelper));
         }
 
         /// <summary>
@@ -65,7 +75,7 @@ namespace ExampleOfHardToTestDesign.Services
                 try
                 {
                     bookingTime = isDelayBookingTime ? bookingTime.AddMinutes(intervals) : this.DateTimeNow();
-                    var serializedData = JsonConvert.SerializeObject(item);
+                    var serializedData = this._jsonHelper.SerializeObject(item);
                     this._taskHelper.CreateTask(TaskTypeEnum.BatchTask, serializedData, bookingTime);
                 }
                 catch (Exception)
