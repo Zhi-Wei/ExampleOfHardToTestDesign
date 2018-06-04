@@ -14,6 +14,11 @@ namespace ExampleOfHardToTestDesign.Services
     public class BatchTaskService : IBatchTaskService
     {
         /// <summary>
+        /// 現在時間。
+        /// </summary>
+        public Func<DateTime> DateTimeNow { get; set; } = () => DateTime.Now;
+
+        /// <summary>
         /// 新增批次任務，若全部新增成功則回傳 <c>true</c> 否則為 <c>false</c>。
         /// </summary>
         /// <param name="batchUploadData">批次任務資料集。</param>
@@ -27,7 +32,7 @@ namespace ExampleOfHardToTestDesign.Services
 
             int officeHours = 9;
             int offHours = 18;
-            int currentHours = DateTime.Now.Hour;
+            int currentHours = this.DateTimeNow().Hour;
             var isDelayBookingTime = false;
 
             if (currentHours > officeHours && currentHours < offHours)
@@ -37,14 +42,14 @@ namespace ExampleOfHardToTestDesign.Services
 
             var result = true;
             int intervals = 1;
-            var bookingTime = DateTime.Now;
+            var bookingTime = this.DateTimeNow();
             var taskHelper = new TaskHelper();
 
             foreach (var item in batchTaskData)
             {
                 try
                 {
-                    bookingTime = isDelayBookingTime ? bookingTime.AddMinutes(intervals) : DateTime.Now;
+                    bookingTime = isDelayBookingTime ? bookingTime.AddMinutes(intervals) : this.DateTimeNow();
                     var serializedData = JsonConvert.SerializeObject(item);
                     taskHelper.CreateTask(TaskTypeEnum.BatchTask, serializedData, bookingTime);
                 }
