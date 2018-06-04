@@ -14,6 +14,21 @@ namespace ExampleOfHardToTestDesign.Services
     public class BatchTaskService : IBatchTaskService
     {
         /// <summary>
+        /// 任務實用程式。
+        /// </summary>
+        private readonly ITaskHelper _taskHelper;
+
+        /// <summary>
+        /// 初始化 <see cref="BatchTaskService"/> 類別實體。
+        /// </summary>
+        /// <param name="taskHelper">任務實用程式。</param>
+        /// <exception cref="ArgumentNullException">taskHelper</exception>
+        public BatchTaskService(ITaskHelper taskHelper)
+        {
+            this._taskHelper = taskHelper ?? throw new ArgumentNullException(nameof(taskHelper));
+        }
+
+        /// <summary>
         /// 現在時間。
         /// </summary>
         public Func<DateTime> DateTimeNow { get; set; } = () => DateTime.Now;
@@ -21,8 +36,9 @@ namespace ExampleOfHardToTestDesign.Services
         /// <summary>
         /// 新增批次任務，若全部新增成功則回傳 <c>true</c> 否則為 <c>false</c>。
         /// </summary>
-        /// <param name="batchUploadData">批次任務資料集。</param>
+        /// <param name="batchTaskData">批次任務資料集。</param>
         /// <returns>若全部新增成功則回傳 <c>true</c> 否則為 <c>false</c>。</returns>
+        /// <exception cref="ArgumentNullException">batchTaskData</exception>
         public bool CreateBatchTasks(IEnumerable<BatchTaskDataEntity> batchTaskData)
         {
             if (batchTaskData == null)
@@ -43,7 +59,6 @@ namespace ExampleOfHardToTestDesign.Services
             var result = true;
             int intervals = 1;
             var bookingTime = this.DateTimeNow();
-            var taskHelper = new TaskHelper();
 
             foreach (var item in batchTaskData)
             {
@@ -51,12 +66,12 @@ namespace ExampleOfHardToTestDesign.Services
                 {
                     bookingTime = isDelayBookingTime ? bookingTime.AddMinutes(intervals) : this.DateTimeNow();
                     var serializedData = JsonConvert.SerializeObject(item);
-                    taskHelper.CreateTask(TaskTypeEnum.BatchTask, serializedData, bookingTime);
+                    this._taskHelper.CreateTask(TaskTypeEnum.BatchTask, serializedData, bookingTime);
                 }
                 catch (Exception)
                 {
                     result = false;
-                    // TODO: 記錄錯誤資訊。
+                    //// TODO: 記錄錯誤資訊。
 
                     continue;
                 }
