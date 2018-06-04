@@ -6,7 +6,8 @@ namespace ExampleOfHardToTestDesign.Utilities
     /// <summary>
     /// 任務實用程式。
     /// </summary>
-    public class TaskHelper
+    /// <seealso cref="ExampleOfHardToTestDesign.Utilities.ITaskHelper" />
+    public class TaskHelper : ITaskHelper
     {
         /// <summary>
         /// 新增任務，若新增任務成功回傳 <c>true</c> 否則為 <c>false</c>。
