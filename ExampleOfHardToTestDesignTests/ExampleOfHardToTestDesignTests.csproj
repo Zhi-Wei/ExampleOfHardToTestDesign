@@ -55,9 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BatchTaskServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExampleOfHardToTestDesign\ExampleOfHardToTestDesign.csproj">
+      <Project>{6D1A5914-8FE7-486E-9546-6B67F829F2FA}</Project>
+      <Name>ExampleOfHardToTestDesign</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
