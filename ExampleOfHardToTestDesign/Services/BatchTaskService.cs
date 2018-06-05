@@ -61,7 +61,7 @@ namespace ExampleOfHardToTestDesign.Services
             int currentHours = this.DateTimeNow().Hour;
             var isDelayBookingTime = false;
 
-            if (currentHours > officeHours && currentHours < offHours)
+            if (currentHours >= officeHours && currentHours <= offHours)
             {
                 isDelayBookingTime = true;
             }
